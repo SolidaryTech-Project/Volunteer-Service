@@ -6,3 +6,13 @@ repos:
       - id: trailing-whitespace
       - id: end-of-file-fixer
       - id: check-yaml
+      - id: check-added-large-files
+      - id: check-merge-conflict
+
+  # 2. Lint + formatação de Python (Ruff: rápido, lint e format num só tool)
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.6.9
+    hooks:
+      - id: ruff           # lint, com correção automática quando possível
+        args: [--fix]
+      - id: ruff-format    # formatação (equivalente ao black)

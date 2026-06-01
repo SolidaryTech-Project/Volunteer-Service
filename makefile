@@ -1,9 +1,9 @@
-#Install Local Dependencies
+# Instala as dependências locais de desenvolvimento (Python service)
 pre-commit:
-#Pre-commit - Inframap - Graphviz (to generate the diagrams)
+# Instala o pre-commit
 	sudo apt update
-	sudo apt upgrade -y
-#Install pre-commit
 	sudo apt install -y pre-commit
-#Activate pre-commit
+# Ativa os hooks no repositório
 	pre-commit install
+# Obs: o Ruff e os hooks básicos sao baixados automaticamente
+# pelo pre-commit no primeiro run (ambiente isolado, nao precisa instalar).
