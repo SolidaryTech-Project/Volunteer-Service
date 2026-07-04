@@ -34,7 +34,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          repository: Togglemaster/Volunteer-Service
+          repository: SolidaryTech-Project/Volunteer-Service
 
       # -----------------------------
       # Setup Python
@@ -106,7 +106,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          repository: Togglemaster/Volunteer-Service
+          repository: SolidaryTech-Project/Volunteer-Service
 
       # -----------------------------
       # 5. Docker Build
@@ -173,7 +173,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          repository: Togglemaster/Volunteer-Service
+          repository: SolidaryTech-Project/Volunteer-Service
           fetch-depth: 0
           token: ${{ secrets.GITOPS_TOKEN }}
 
