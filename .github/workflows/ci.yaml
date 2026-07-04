@@ -134,6 +134,7 @@ jobs:
           image-ref: ${{ env.IMAGE_NAME }}
           severity: 'CRITICAL'
           exit-code: '1'
+          trivyignores: ${{ inputs.environment }}/.trivyignore
 
       # -----------------------------
       # 7. Configure AWS Credentials

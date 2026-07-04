@@ -13,6 +13,8 @@ FROM python:3.9-slim
 
 RUN groupadd -r appuser && useradd -r -g appuser appuser
 
+RUN apt-get update && apt-get upgrade -y && rm -rf /var/lib/apt/lists/*
+
 WORKDIR /app
 
 COPY --from=builder /usr/local/lib/python3.9/site-packages /usr/local/lib/python3.9/site-packages
