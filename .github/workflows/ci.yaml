@@ -194,7 +194,7 @@ jobs:
       - name: Update image tag
         run: |
           COMMIT_HASH=${GITHUB_SHA::7}
-          FILE_PATH="${{ inputs.environment }}/Helm/${{ env.SERVICE_NAME }}/values.yaml"
+          FILE_PATH="${{ inputs.environment }}/Helm/values.yaml"
           NEW_IMAGE="${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ vars.AWS_REGION }}.amazonaws.com/${{ env.SERVICE_NAME }}:${{ inputs.environment }}-$COMMIT_HASH"
 
           echo "Updating $FILE_PATH to image: $NEW_IMAGE"
@@ -213,7 +213,7 @@ jobs:
       - name: Commit and Push changes
         run: |
           COMMIT_HASH=${GITHUB_SHA::7}
-          FILE_PATH="${{ inputs.environment }}/Helm/${{ env.SERVICE_NAME }}/values.yaml"
+          FILE_PATH="${{ inputs.environment }}/Helm/values.yaml"
 
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
