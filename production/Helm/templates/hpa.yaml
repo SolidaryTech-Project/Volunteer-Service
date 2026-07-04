@@ -1,0 +1,27 @@
+{{- if (index .Values "volunteer-service").autoscaling.enabled }}
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: volunteer-service-hpa
+  namespace: {{ (index .Values "volunteer-service").namespace }}
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: app-volunteer-service
+  minReplicas: {{ (index .Values "volunteer-service").autoscaling.minReplicas }}
+  maxReplicas: {{ (index .Values "volunteer-service").autoscaling.maxReplicas }}
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: {{ (index .Values "volunteer-service").autoscaling.targetCPUUtilizationPercentage }}
+  - type: Resource
+    resource:
+      name: memory
+      target:
+        type: Utilization
+        averageUtilization: {{ (index .Values "volunteer-service").autoscaling.targetMemoryUtilizationPercentage }}
+{{- end }}
