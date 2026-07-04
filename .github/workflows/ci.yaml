@@ -162,15 +162,17 @@ jobs:
 
           ECR_REGISTRY=${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ vars.AWS_REGION }}.amazonaws.com
           ECR_REPOSITORY=$SERVICE_NAME
+          IMAGE_TAG=${{ inputs.environment }}-$COMMIT_HASH
 
           aws ecr describe-repositories --repository-names $ECR_REPOSITORY --region $AWS_REGION \
           || aws ecr create-repository --repository-name $ECR_REPOSITORY --region $AWS_REGION
 
-          docker tag $IMAGE_NAME $ECR_REGISTRY/$ECR_REPOSITORY:${{ inputs.environment }}-$COMMIT_HASH
-          docker tag $IMAGE_NAME $ECR_REGISTRY/$ECR_REPOSITORY:${{ inputs.environment }}-latest
-
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:${{ inputs.environment }}-$COMMIT_HASH
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:${{ inputs.environment }}-latest
+          if aws ecr describe-images --repository-name $ECR_REPOSITORY --image-ids imageTag=$IMAGE_TAG --region $AWS_REGION >/dev/null 2>&1; then
+            echo "Tag $IMAGE_TAG already exists in $ECR_REPOSITORY, skipping push (repository is immutable)."
+          else
+            docker tag $IMAGE_NAME $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+            docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          fi
 
   gitops:
     name: Update GitOps Manifests
