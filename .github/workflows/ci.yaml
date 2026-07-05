@@ -106,6 +106,8 @@ jobs:
     runs-on: ubuntu-latest
     environment: ${{ inputs.environment }}
     needs: build-test-security
+    env:
+      AWS_REGION: ${{ inputs.aws-region || vars.AWS_REGION }}
     defaults:
       run:
         working-directory: ${{ inputs.environment }}
@@ -144,7 +146,7 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ inputs.aws-region }}
+          aws-region: ${{ env.AWS_REGION }}
 
       # -----------------------------
       # 8. Login to Amazon ECR
@@ -160,7 +162,7 @@ jobs:
         run: |
           COMMIT_HASH=${GITHUB_SHA::7}
 
-          ECR_REGISTRY=${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ inputs.aws-region }}.amazonaws.com
+          ECR_REGISTRY=${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com
           ECR_REPOSITORY=$SERVICE_NAME
           IMAGE_TAG=${{ inputs.environment }}-$COMMIT_HASH
 
@@ -179,6 +181,8 @@ jobs:
     runs-on: ubuntu-latest
     environment: ${{ inputs.environment }}
     needs: docker
+    env:
+      AWS_REGION: ${{ inputs.aws-region || vars.AWS_REGION }}
 
     steps:
       - name: Checkout repository
@@ -197,7 +201,7 @@ jobs:
         run: |
           COMMIT_HASH=${GITHUB_SHA::7}
           FILE_PATH="${{ inputs.environment }}/Helm/values.yaml"
-          NEW_IMAGE="${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ inputs.aws-region }}.amazonaws.com/${{ env.SERVICE_NAME }}:${{ inputs.environment }}-$COMMIT_HASH"
+          NEW_IMAGE="${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/${{ env.SERVICE_NAME }}:${{ inputs.environment }}-$COMMIT_HASH"
 
           echo "Updating $FILE_PATH to image: $NEW_IMAGE"
 

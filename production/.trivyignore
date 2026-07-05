@@ -1,0 +1,4 @@
+# perl-base CVEs with no fix available in Debian 13 as of 2026-07-04.
+# Status: fix_deferred / affected — revisit when Debian ships a patch.
+CVE-2026-42496
+CVE-2026-8376
