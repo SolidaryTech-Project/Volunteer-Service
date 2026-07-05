@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   labels:
     app: app-volunteer-service
-    {{- include "togglemaster.labels" .| nindent 4 }}
+    {{- include "solidarytech.labels" .| nindent 4 }}
   name: app-volunteer-service
   namespace: {{ (index .Values "volunteer-service").namespace }}
 spec:
