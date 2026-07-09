@@ -1,7 +1,7 @@
 volunteer-service:
   replicas: 1
   namespace: volunteer-service
-  image: 778900740186.dkr.ecr.us-east-1.amazonaws.com/volunteer-service:staging-58484f4
+  image: 585534523398.dkr.ecr.us-east-1.amazonaws.com/staging-volunteer-service:staging
   imagePullPolicy: IfNotPresent
   port: 8083
   imagePullSecrets:
